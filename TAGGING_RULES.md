@@ -1,7 +1,8 @@
 # Tagging Rules (v0)
 
-## Inline Macros
+## Index Macros
 - Use typed macros: `\\sindex`, `\\nindex`, `\\lindex`.
+- Insert tags immediately after the phrase (do not replace the phrase).
 
 ## Placement
 - Insert tag immediately after the phrase.
@@ -31,12 +32,24 @@ von Neumann\nindex{von Neumann, John}
 ablaut\lindex{ablaut}
 ```
 
+## Sorting vs. Display
+- If the displayed index form includes formatting, provide a sort key:
+```tex
+n-grams\sindex{n-grams@\textit{n-grams}}
+```
+
 ## Ranges
 - Use range markers when a concept is discussed contiguously.
 ```tex
 finite difference method\sindex{finite difference method|(}
 ... (discussion)
 \sindex{finite difference method|)}
+```
+
+## Cross-References
+```tex
+FDM\sindex{FDM|see{finite difference method}}
+finite difference method\sindex{finite difference method}\sindex{finite difference method|seealso{finite element method}}
 ```
 
 ## Suggestions (when existing tags differ)

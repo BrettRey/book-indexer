@@ -2,9 +2,9 @@ import glob
 import re
 import os
 
-# Regex to find our tags: \isi{term}, \ini{term}, \ili{term}
+# Regex to find our tags: \is{term}, \isi{term}, \in{term}, \ini{term}, \il{term}, \ili{term}
 # Also standard \index{...} if any remain
-TAG_PATTERN = re.compile(r"\\(isi|ini|ili|index|sindex|nindex|lindex)\{([^}]+)")
+TAG_PATTERN = re.compile(r"\\(isi?|ini?|ili?|index|sindex|nindex|lindex)\{([^}]+)")
 
 def generate_report(dir_path):
     files = sorted(glob.glob(os.path.join(dir_path, "*.tex")))
@@ -32,11 +32,11 @@ def generate_report(dir_path):
                 # Clean term for display
                 display = term
                 
-                if 'n' in cmd:
+                if cmd in ('in', 'ini', 'nindex'):
                     by_type['name'].append(display)
-                elif 'l' in cmd and 'lindex' in cmd or 'ili' in cmd:
+                elif cmd in ('il', 'ili', 'lindex'):
                     by_type['language'].append(display)
-                elif 's' in cmd or 'isi' in cmd:
+                elif cmd in ('is', 'isi', 'sindex'):
                     by_type['subject'].append(display)
                 else:
                     by_type['other'].append(display)

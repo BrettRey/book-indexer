@@ -1,6 +1,10 @@
 rules:
   default_plural: singular
   name_style: last-first
+  synonym_mode: canonical  # or "see"
+  auto_hierarchy: true
+  auto_hierarchy_min_words: 2
+  auto_hierarchy_min_group: 2
 
 entries:
   - term: "finite difference method"
@@ -10,6 +14,8 @@ entries:
       - "finite-difference method"
     see_also:
       - "finite element method"
+  - term: "finite element method"
+    type: subject
   - term: "von Neumann, John"
     type: name
     synonyms:

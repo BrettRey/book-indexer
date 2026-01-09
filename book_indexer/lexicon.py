@@ -13,6 +13,7 @@ class Lexicon:
 
     def __init__(self, lexicon_path: Optional[str] = None):
         self.entries: list[dict] = []
+        self.rules: dict = {}
         self._term_index: dict[str, dict] = {}  # term -> entry (for fast lookup)
         self._synonym_index: dict[str, dict] = {}  # synonym -> entry
 
@@ -27,12 +28,15 @@ class Lexicon:
             data = yaml.safe_load(f)
 
         if data and 'entries' in data:
+            self.rules = data.get('rules', {}) or {}
             self.entries = data['entries']
             self._build_indices()
 
     def save(self, path: str) -> None:
         """Save lexicon to YAML file."""
         data = {'entries': self.entries}
+        if self.rules:
+            data['rules'] = self.rules
         with open(path, 'w', encoding='utf-8') as f:
             yaml.dump(data, f, default_flow_style=False, allow_unicode=True)
 
@@ -81,6 +85,10 @@ class Lexicon:
         """Get the canonical form of a term (for synonyms)."""
         entry = self.get_entry(term)
         return entry['term'] if entry else None
+
+    def get_rule(self, key: str, default=None):
+        """Return a rule value from the lexicon rules block."""
+        return self.rules.get(key, default)
 
     def __len__(self) -> int:
         return len(self.entries)

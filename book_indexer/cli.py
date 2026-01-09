@@ -6,6 +6,7 @@ import sys
 import yaml
 from book_indexer.tagger import Tagger
 from book_indexer.lexicon import Lexicon
+from book_indexer.llm_assist import run_assist, LLMError
 
 
 def cmd_scan(args):
@@ -51,7 +52,7 @@ def cmd_tag(args):
         print(f"Error: No entries in lexicon {args.lexicon}", file=sys.stderr)
         sys.exit(1)
 
-    tagger = Tagger(lexicon)
+    tagger = Tagger(lexicon, placement=args.placement, command_set=args.command_set)
 
     if args.strip:
         print("Stripping existing tags first...")
@@ -108,6 +109,9 @@ Examples:
 
   # Strip and re-tag
   book-indexer tag chapters/ --lexicon lexicon.yaml --mode auto --strip
+
+  # LLM-assisted lexicon suggestions
+  book-indexer assist chapters/ --lexicon lexicon.yaml --report llm_report.json
 """
     )
     parser.add_argument('-v', '--verbose', action='store_true',
@@ -140,10 +144,51 @@ Examples:
         help='Tagging mode: guide (preview), assist (safe), auto (full)')
     tag_parser.add_argument('--lexicon', '-l', default='lexicon.yaml',
         help='Path to lexicon file (default: lexicon.yaml)')
+    tag_parser.add_argument('--placement',
+        choices=['after', 'inline'], default='after',
+        help='Tag placement: after (default) or inline (replace text)')
+    tag_parser.add_argument('--command-set',
+        choices=['auto', 'typed', 'langsci'], default='auto',
+        help='Index command set for inserted tags (default: auto)')
     tag_parser.add_argument('--strip', '-s', action='store_true',
         help='Strip existing tags before tagging')
     tag_parser.add_argument('--report', '-r',
         help='Save detailed JSON report to file')
+
+    # assist command
+    assist_parser = subparsers.add_parser('assist',
+        help='LLM-assisted lexicon normalization and cross-references')
+    assist_parser.add_argument('dir_path',
+        help='Path to directory containing LaTeX files')
+    assist_parser.add_argument('--lexicon', '-l', default='lexicon.yaml',
+        help='Path to lexicon file (default: lexicon.yaml)')
+    assist_parser.add_argument('--report', '-r', default='llm_report.json',
+        help='Output JSON report (default: llm_report.json)')
+    assist_parser.add_argument('--apply', action='store_true',
+        help='Apply updates to lexicon in place')
+    assist_parser.add_argument('--provider',
+        choices=['openai', 'anthropic', 'command'], default='openai',
+        help='LLM provider to use (default: openai)')
+    assist_parser.add_argument('--model', default='gpt-4o-mini',
+        help='Model name for the LLM provider')
+    assist_parser.add_argument('--api-key',
+        help='Override API key (otherwise use provider env var)')
+    assist_parser.add_argument('--base-url',
+        help='Override provider API base URL')
+    assist_parser.add_argument('--llm-command',
+        help='Shell command to run when provider=command')
+    assist_parser.add_argument('--include-hidden', action='store_true',
+        help='Include hidden directories when scanning for .tex files')
+    assist_parser.add_argument('--chunk-size', type=int, default=20,
+        help='Number of entries per LLM call (default: 20)')
+    assist_parser.add_argument('--max-contexts', type=int, default=2,
+        help='Max contexts per entry (default: 2)')
+    assist_parser.add_argument('--context-window', type=int, default=80,
+        help='Characters to include around each match (default: 80)')
+    assist_parser.add_argument('--temperature', type=float, default=0.2,
+        help='LLM temperature (default: 0.2)')
+    assist_parser.add_argument('--max-tokens', type=int, default=1200,
+        help='Max tokens per LLM response (default: 1200)')
 
     args = parser.parse_args()
 
@@ -153,6 +198,29 @@ Examples:
         cmd_strip(args)
     elif args.command == 'tag':
         cmd_tag(args)
+    elif args.command == 'assist':
+        try:
+            run_assist(
+                dir_path=args.dir_path,
+                lexicon_path=args.lexicon,
+                report_path=args.report,
+                apply=args.apply,
+                provider=args.provider,
+                model=args.model,
+                api_key=args.api_key,
+                base_url=args.base_url,
+                command=args.llm_command,
+                include_hidden=args.include_hidden,
+                chunk_size=args.chunk_size,
+                max_contexts=args.max_contexts,
+                context_window=args.context_window,
+                temperature=args.temperature,
+                max_tokens=args.max_tokens,
+            )
+            print(f"LLM report saved to {args.report}")
+        except LLMError as exc:
+            print(f"LLM assist failed: {exc}", file=sys.stderr)
+            sys.exit(1)
 
 
 if __name__ == '__main__':
