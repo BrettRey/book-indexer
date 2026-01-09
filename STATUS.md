@@ -1,10 +1,10 @@
 # Book Indexer
 
-**Status:** Requirements and design drafted
-**Type:** Tool (Python or similar)
+**Status:** Core implementation complete
+**Type:** Tool (Python)
 **Primary use:** HPC book index
 **Secondary use:** Share with LangSci Press
-**Last updated:** 2026-01-08
+**Last updated:** 2026-01-09
 
 ---
 
@@ -13,7 +13,7 @@
 - [x] Project created
 - [x] Requirements gathering
 - [x] Design
-- [ ] Implementation
+- [x] Implementation (core pipeline)
 - [ ] Testing on HPC book
 - [ ] Documentation for LangSci
 
@@ -21,11 +21,14 @@
 
 ## Next Actions
 
-1. Implement core pipeline (parse -> propose -> write tags -> emit .idx)
+1. Test on HPC book chapters
+2. Add pyproject.toml for proper installation
+3. Documentation for LangSci Press
 
 ---
 
 ## Session Log
 
 - **2026-01-08**: Project created
-- **2026-01-09**: Requirements and design drafted
+- **2026-01-09 (Gemini)**: Requirements and design drafted, buggy implementation
+- **2026-01-09 (Claude)**: Rewrote lexicon.py, tagger.py, cli.py with robust regex; tested on langsci-81
