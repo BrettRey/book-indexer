@@ -3,6 +3,7 @@
 ## Index Macros
 - Use typed macros: `\\sindex`, `\\nindex`, `\\lindex`.
 - Insert tags immediately after the phrase (do not replace the phrase).
+- Prefer canonical forms from the lexicon; keep visible text unchanged.
 
 ## Placement
 - Insert tag immediately after the phrase.
@@ -36,6 +37,12 @@ ablaut\lindex{ablaut}
 - If the displayed index form includes formatting, provide a sort key:
 ```tex
 n-grams\sindex{n-grams@\textit{n-grams}}
+```
+
+## Hierarchy
+- Use `!` for subentries:
+```tex
+primary modeling system\sindex{modeling system!primary}
 ```
 
 ## Ranges

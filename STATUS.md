@@ -1,6 +1,6 @@
 # Book Indexer
 
-**Status:** Core implementation complete
+**Status:** Core implementation complete; LLM assist available
 **Type:** Tool (Python)
 **Primary use:** HPC book index
 **Secondary use:** Share with LangSci Press
@@ -14,6 +14,7 @@
 - [x] Requirements gathering
 - [x] Design
 - [x] Implementation (core pipeline)
+- [x] LLM-assisted lexicon suggestions (optional)
 - [ ] Testing on HPC book
 - [ ] Documentation for LangSci
 
@@ -22,8 +23,9 @@
 ## Next Actions
 
 1. Test on HPC book chapters
-2. Add pyproject.toml for proper installation
-3. Documentation for LangSci Press
+2. Validate LLM assist report quality on langsci-81 output
+3. Add pyproject.toml for proper installation
+4. Documentation for LangSci Press
 
 ---
 
@@ -32,3 +34,4 @@
 - **2026-01-08**: Project created
 - **2026-01-09 (Gemini)**: Requirements and design drafted, buggy implementation
 - **2026-01-09 (Claude)**: Rewrote lexicon.py, tagger.py, cli.py with robust regex; tested on langsci-81
+- **2026-01-09 (Codex)**: Added LLM assist pipeline, canonical tagging fixes, hierarchy + cross-ref support

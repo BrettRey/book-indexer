@@ -169,8 +169,8 @@ Examples:
     assist_parser.add_argument('--provider',
         choices=['openai', 'anthropic', 'command'], default='openai',
         help='LLM provider to use (default: openai)')
-    assist_parser.add_argument('--model', default='gpt-4o-mini',
-        help='Model name for the LLM provider')
+    assist_parser.add_argument('--model',
+        help='Model name for the LLM provider (optional)')
     assist_parser.add_argument('--api-key',
         help='Override API key (otherwise use provider env var)')
     assist_parser.add_argument('--base-url',

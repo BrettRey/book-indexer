@@ -11,6 +11,7 @@ The tool targets LaTeX academic books and produces three indexes: language/lexic
 - Updated LaTeX sources with inline tags (e.g., `\\index{...}` or index-type macros).
 - `.idx` files for each index type, compatible with `makeindex`/`xindy`.
 - Change report summarizing insertions, edits, and suggested improvements.
+- Optional LLM suggestion report for lexicon normalization and cross-refs.
 
 ## Functional Requirements
 - Parse standard LaTeX structure and preserve formatting and non-index macros.
@@ -22,6 +23,7 @@ The tool targets LaTeX academic books and produces three indexes: language/lexic
   - Build hierarchical structures where appropriate.
   - Maintain consistent entry form while favoring ease of use.
 - Support optional lexicon-guided normalization and disambiguation.
+- Provide an optional LLM-assisted workflow to propose lexicon updates.
 
 ## Author Participation Modes
 - `guide`: proposals only; no source edits without confirmation.

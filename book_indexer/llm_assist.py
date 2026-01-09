@@ -207,6 +207,7 @@ def _build_prompt(entries: list[dict], contexts: dict[int, list[str]]) -> tuple[
         - Add display forms (LaTeX formatting) when needed.
         - Introduce hierarchy (head!sub) where appropriate.
         - Add see/see_also cross-refs for synonyms and related terms.
+        - Prefer see refs when an alternative term should redirect rather than co-index.
         Return strict JSON only."""
     )
     items = []
@@ -304,7 +305,7 @@ def run_assist(
     report_path: str,
     apply: bool = False,
     provider: str = "openai",
-    model: str = "gpt-4o-mini",
+    model: Optional[str] = None,
     api_key: Optional[str] = None,
     base_url: Optional[str] = None,
     command: Optional[str] = None,
@@ -327,9 +328,18 @@ def run_assist(
         entries.append(entry_copy)
 
     contexts = _build_contexts(files, entries, max_contexts, context_window)
+    resolved_model = model
+    if not resolved_model:
+        if provider == 'openai':
+            resolved_model = "gpt-4o-mini"
+        elif provider == 'anthropic':
+            resolved_model = "claude-3-5-sonnet-latest"
+        else:
+            resolved_model = ""
+
     client = LLMClient(
         provider=provider,
-        model=model,
+        model=resolved_model,
         api_key=api_key,
         base_url=base_url,
         command=command,

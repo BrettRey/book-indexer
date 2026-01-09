@@ -9,11 +9,12 @@
 2. **Detect candidates** for terms, names, and lexical items.
 3. **Classify** candidates into index types (language/lexical, subject, name).
 4. **Normalize** entry forms using lexicon + heuristics.
-5. **Structure** entries into hierarchy (term!subterm).
-6. **Range reasoning** to choose ranges vs single pages.
-7. **Cross-refs** (`see`, `see also`) from synonym and related-term signals.
-8. **Write tags** back into LaTeX sources.
-9. **Emit** `.idx` files and an audit report.
+5. **LLM assist (optional)** for hierarchy, cross-refs, and display forms.
+6. **Structure** entries into hierarchy (term!subterm).
+7. **Range reasoning** to choose ranges vs single pages.
+8. **Cross-refs** (`see`, `see also`) from synonym and related-term signals.
+9. **Write tags** back into LaTeX sources.
+10. **Emit** `.idx` files and an audit report.
 
 ## Data Model (conceptual)
 - **Entry**: canonical label, index type, synonyms, hierarchy hints.
@@ -36,12 +37,14 @@
 - Synonyms and preferred display form
 - Hierarchy hints
 - `see` / `see also` mappings
+- Optional `rules` block for LLM and hierarchy heuristics
 
 ## CLI Commands (initial)
 - `scan`: analyze sources, report candidate entries.
 - `tag`: insert tags according to mode (`guide`/`assist`/`auto`).
 - `build`: emit `.idx` for `makeindex`/`xindy`.
 - `lexicon init`: create a starter lexicon from detected candidates.
+- `assist`: LLM-assisted lexicon suggestions (report-only or apply).
 
 ## Author Participation
 - `guide`: preview-only; produce a review report.
