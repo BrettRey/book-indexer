@@ -1,0 +1,19 @@
+rules:
+  default_plural: singular
+  name_style: last-first
+
+entries:
+  - term: "finite difference method"
+    type: subject
+    synonyms:
+      - "FDM"
+      - "finite-difference method"
+    see_also:
+      - "finite element method"
+  - term: "von Neumann, John"
+    type: name
+    synonyms:
+      - "John von Neumann"
+      - "J. von Neumann"
+  - term: "boundary conditions"
+    type: subject
