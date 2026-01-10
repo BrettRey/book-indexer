@@ -1,0 +1,1045 @@
+entries:
+- term: dialectometry
+  type: subject
+- see:
+  - GIS
+  synonyms:
+  - GIS
+  term: geographic information system (GIS)
+  type: subject
+- hierarchy:
+  - autocorrelation
+  - geospatial
+  term: geospatial autocorrelation
+  type: subject
+- term: perceptual dialectology
+  type: subject
+- hierarchy:
+  - vowel shift
+  - Southern
+  term: Southern vowel shift
+  type: subject
+- display: \textit{Atlas of North American English}
+  synonyms:
+  - ANAE
+  term: Atlas of North American English
+  type: subject
+- term: cross-over points
+  type: subject
+- term: ANOVA
+  type: subject
+- hierarchy:
+  - analysis
+  - principal components
+  see:
+  - PCA
+  synonyms:
+  - PCA
+  term: principal components analysis
+  type: subject
+- term: Getis-Ord Gi
+  type: subject
+- hierarchy:
+  - distance matrix
+  - spatial
+  term: spatial distance matrix
+  type: subject
+- hierarchy:
+  - weighting function
+  - spatial
+  term: spatial weighting function
+  type: subject
+- hierarchy:
+  - vowel shift
+  - California
+  term: California vowel shift
+  type: subject
+- term: regiolect
+  type: subject
+- hierarchy:
+  - area
+  - dialect
+  term: dialect area
+  type: subject
+- term: dialect levelling
+  type: subject
+- hierarchy:
+  - syntax
+  - dialect
+  term: dialect syntax
+  type: subject
+- term: microvariation
+  type: subject
+- hierarchy:
+  - variation
+  - syntactic
+  term: syntactic variation
+  type: subject
+- term: language change
+  type: subject
+- hierarchy:
+  - theory
+  - syntactic
+  term: syntactic theory
+  type: subject
+- term: optionality in grammar
+  type: subject
+- hierarchy:
+  - variation
+  - interpersonal
+  term: interpersonal variation
+  type: subject
+- term: dynamism
+  type: subject
+- hierarchy:
+  - German
+  - Swiss
+  term: Swiss German
+  type: language
+- term: verb doubling
+  type: subject
+- term: variation index
+  type: subject
+- hierarchy:
+  - autocorrelation
+  - spatial
+  term: spatial autocorrelation
+  type: subject
+- hierarchy:
+  - analysis
+  - hot spot
+  term: hot spot analysis
+  type: subject
+- hierarchy:
+  - area
+  - dialect
+  - conservative vs. innovative
+  term: conservative vs. innovative dialect areas
+  type: subject
+- term: Alemannic
+  type: language
+- term: code-switching
+  type: subject
+- hierarchy:
+  - network!social
+  term: social network
+  type: subject
+- term: language contact
+  type: subject
+- term: English teacher
+  type: subject
+- hierarchy:
+  - change!linguistic
+  term: linguistic change
+  type: subject
+- hierarchy:
+  - network!structure
+  term: network structure
+  type: subject
+- term: density
+  type: subject
+- term: multiplexity
+  type: subject
+- hierarchy:
+  - English language!non-native speaker
+  synonyms:
+  - non-native speakers of English
+  term: non-native speaker
+  type: subject
+- hierarchy:
+  - regression!multiple
+  term: multiple regression
+  type: subject
+- term: flap
+  type: subject
+- hierarchy:
+  - correlation!Pearson
+  term: Pearson correlation
+  type: subject
+- term: group phraseology
+  type: subject
+- term: community of practice
+  type: subject
+- hierarchy:
+  - change!real-time
+  synonyms:
+  - real-time changes
+  term: real-time change
+  type: subject
+- hierarchy:
+  - change!apparent-time
+  synonyms:
+  - apparent-time changes
+  term: apparent-time change
+  type: subject
+- term: geolinguistics
+  type: subject
+- hierarchy:
+  - research!real-time interval
+  term: real-time interval research
+  type: subject
+- hierarchy:
+  - map!linguistic
+  synonyms:
+  - linguistic maps
+  term: linguistic map
+  type: subject
+- term: dialectal border
+  type: subject
+- hierarchy:
+  - variation!lexical
+  term: lexical variation
+  type: subject
+- term: superimposing maps
+  type: subject
+- synonyms:
+  - GIS
+  term: geographical information systems (GIS)
+  type: subject
+- hierarchy:
+  - change!completed
+  synonyms:
+  - completed changes
+  term: completed change
+  type: subject
+- term: diffusion
+  type: subject
+- hierarchy:
+  - variation!morphological
+  term: morphological variation
+  type: subject
+- term: standardization
+  type: subject
+- hierarchy:
+  - change!in progress
+  synonyms:
+  - changes in progress
+  term: change in progress
+  type: subject
+- term: lexical innovation
+  type: subject
+- synonyms:
+  - standard system
+  term: system!standard
+  type: subject
+- synonyms:
+  - localized system
+  term: system!localized
+  type: subject
+- term: georeferencing
+  type: subject
+- term: heritage language
+  type: subject
+- term: Cantonese
+  type: language
+- term: Faetar
+  type: language
+- term: Korean
+  type: language
+- synonyms:
+  - dialect divergence
+  term: divergence!dialect
+  type: subject
+- synonyms:
+  - new dialect
+  term: dialect!new
+  type: subject
+- term: ethnic orientation
+  type: subject
+- term: Chinese
+  type: language
+- term: leveling
+  type: subject
+- display: koin\'eization
+  synonyms:
+  - koinéization
+  term: koineization
+  type: subject
+- term: comparative variationist linguistics
+  type: subject
+- synonyms:
+  - variationist sociolinguistics
+  term: sociolinguistics!variationist
+  type: subject
+- term: Hungarian
+  type: language
+- synonyms:
+  - sociolinguistic interview
+  term: interview!sociolinguistic
+  type: subject
+- term: time-aligned transcription and integrated coding
+  type: subject
+- term: integrated research and teaching
+  type: subject
+- term: interactive speaker-sample map
+  type: subject
+- term: isogloss
+  type: subject
+- synonyms:
+  - dialect geography
+  term: geography!dialect
+  type: subject
+- term: transcription
+  type: subject
+- synonyms:
+  - speech atlas
+  term: atlas!speech
+  type: subject
+- term: Gabmap
+  type: subject
+- synonyms:
+  - Short-a
+  term: short-a
+  type: subject
+- term: ultrasound
+  type: subject
+- synonyms:
+  - linear regression
+  term: regression!linear
+  type: subject
+- synonyms:
+  - ultraspeech
+  term: UltraSpeech
+  type: subject
+- synonyms:
+  - Matlab
+  term: MATLAB
+  type: subject
+- term: tensing
+  type: subject
+- hierarchy:
+  - ANOVA
+  - smoothing-spline
+  synonyms:
+  - smoothing-spline ANOVA
+  term: ANOVA
+  type: subject
+- term: lexical features
+  type: subject
+- term: Tuscan
+  type: language
+- hierarchy:
+  - partitioning
+  - hierarchical bipartite spectral graph
+  synonyms:
+  - HBSGP
+  - hierarchical bipartite spectral graph partitioning
+  term: partitioning
+  type: subject
+- hierarchy:
+  - clustering
+  - dialect
+  synonyms:
+  - dialect clustering
+  term: clustering
+  type: subject
+- term: Dutch
+  type: language
+- term: lexical change
+  type: subject
+- term: representativeness
+  type: subject
+- term: concept-lexicalization pair
+  type: subject
+- term: singular value decomposition
+  type: subject
+- hierarchy:
+  - clustering
+  - \textit{k}-means
+  synonyms:
+  - \textit{k}-means clustering
+  - k-means clustering
+  term: clustering
+  type: subject
+- term: distinctiveness
+  type: subject
+- term: importance
+  type: subject
+- hierarchy:
+  - area
+  - lexical
+  synonyms:
+  - lexical area
+  term: area
+  type: subject
+- hierarchy:
+  - isoglosses
+  - bundle of
+  synonyms:
+  - bundle of isoglosses
+  term: isoglosses
+  type: subject
+- term: dialect border
+  type: subject
+- hierarchy:
+  - area
+  - dialectal
+  - granularity
+  synonyms:
+  - granularity of dialectal areas
+  term: area
+  type: subject
+- hierarchy:
+  - isoglosses
+  - nested
+  synonyms:
+  - nested isoglosses
+  term: isoglosses
+  type: subject
+- hierarchy:
+  - English
+  - British
+  synonyms:
+  - British English
+  term: English
+  type: language
+- hierarchy:
+  - dialectometry
+  - corpus-based
+  synonyms:
+  - corpus-based dialectometry
+  term: dialectometry
+  type: subject
+- term: usage data
+  type: subject
+- term: Freiburg Corpus of English Dialects
+  type: subject
+- hierarchy:
+  - clustering
+  - hierarchical
+  synonyms:
+  - hierarchical clustering
+  term: clustering
+  type: subject
+- term: correlation
+  type: subject
+- synonyms:
+  - fundamental dialectological postulate
+  term: Fundamental Dialectological Postulate
+  type: subject
+- hierarchy:
+  - model
+  - generalized additive
+  synonyms:
+  - GAM
+  - generalized additive model
+  term: model
+  type: subject
+- hierarchy:
+  - model
+  - regression
+  synonyms:
+  - regression modeling
+  term: model
+  type: subject
+- hierarchy:
+  - differences
+  - age
+  synonyms:
+  - age differences
+  term: differences
+  type: subject
+- hierarchy:
+  - differences
+  - gender
+  synonyms:
+  - gender differences
+  term: differences
+  type: subject
+- synonyms:
+  - parts-of-speech
+  term: parts of speech
+  type: subject
+- display: \emph{n}-grams
+  synonyms:
+  - \emph{n}-grams
+  term: n-grams
+  type: subject
+- term: permutation
+  type: subject
+- term: RuG/L04
+  type: subject
+- term: Breton
+  type: language
+- see_also:
+  - edit distance
+  term: Levenshtein distance
+  type: subject
+- hierarchy:
+  - distance!edit
+  see_also:
+  - Levenshtein distance
+  term: edit distance
+  type: subject
+- hierarchy:
+  - geography!linguistic
+  term: linguistic geography
+  type: subject
+- hierarchy:
+  - variation!phonetic
+  term: phonetic variation
+  type: subject
+- hierarchy:
+  - analysis!quantitative
+  term: quantitative analysis
+  type: subject
+- hierarchy:
+  - analysis!qualitative
+  term: qualitative analysis
+  type: subject
+- hierarchy:
+  - area!dialect
+  term: dialect areas
+  type: subject
+- term: Croatian
+  type: language
+- hierarchy:
+  - modeling system!secondary
+  term: secondary modeling system
+  type: subject
+- term: semiosphere
+  type: subject
+- term: semiological sign
+  type: subject
+- term: Venetian
+  type: language
+- term: semiotic space
+  type: subject
+- term: convergence
+  type: subject
+- term: saliency
+  type: subject
+- term: linguistic accommodation
+  type: subject
+- hierarchy:
+  - divergence!dialect
+  term: divergence
+  type: subject
+- hierarchy:
+  - variation!intrasystemic quantitative
+  term: intrasystemic quantitative variation
+  type: subject
+- term: semiotic triangle
+  type: subject
+- term: semiosis
+  type: subject
+- hierarchy:
+  - modeling system!primary
+  term: primary modeling system
+  type: subject
+- hierarchy:
+  - variation!intrasystemic qualitative
+  term: intrasystemic qualitative variation
+  type: subject
+- hierarchy:
+  - theory!dialect radiation
+  term: dialect radiation theory
+  type: subject
+- hierarchy:
+  - research!real-time
+  term: real-time research
+  type: subject
+- synonyms:
+  - formation process of Japanese dialects (FPJD)
+  term: Formation Process of Japanese Dialects (FPJD)
+  type: subject
+- term: real-time
+  type: subject
+- hierarchy:
+  - suffix!past-tense negative verb
+  term: past-tense negative verb suffix
+  type: subject
+- hierarchy:
+  - comparison!real-time
+  synonyms:
+  - real-time comparison of dialectal distributions
+  term: real-time comparison
+  type: subject
+- hierarchy:
+  - change!rapid
+  term: rapid change
+  type: subject
+- term: standstills
+  type: subject
+- hierarchy:
+  - comparison!real-time interval
+  term: real-time interval comparison
+  type: subject
+- hierarchy:
+  - form!standard
+  term: standard form
+  type: subject
+- term: multiple answers
+  type: subject
+- hierarchy:
+  - diffusion!route
+  term: diffusion route
+  type: subject
+- hierarchy:
+  - database!image
+  term: image database
+  type: subject
+- hierarchy:
+  - network!road
+  term: road network
+  type: subject
+- term: transportation
+  type: subject
+- hierarchy:
+  - comment!informant
+  term: informant's comment
+  type: subject
+- term: animation
+  type: subject
+- term: similarity
+  type: subject
+- term: buffer
+  type: subject
+- hierarchy:
+  - triangulation!Delaunay
+  term: Delaunay triangulation
+  type: subject
+- hierarchy:
+  - representation!network
+  term: network representation
+  type: subject
+- hierarchy:
+  - matrix!distance
+  term: distance matrix
+  type: subject
+- hierarchy:
+  - pattern!accentuation
+  term: accentuation pattern
+  type: subject
+- hierarchy:
+  - change!tonal
+  term: tonal change
+  type: subject
+- term: bilingualism
+  type: subject
+- hierarchy:
+  - sentence!reading
+  term: reading sentence
+  type: subject
+- hierarchy:
+  - conversation!scripted
+  term: scripted conversation
+  type: subject
+- hierarchy:
+  - regression!logistic
+  term: logistic regression
+  type: subject
+- hierarchy:
+  - media!broadcasting
+  term: broadcasting media
+  type: subject
+- hierarchy:
+  - program!pop culture
+  term: pop culture program
+  type: subject
+- hierarchy:
+  - meaning!social
+  term: social meaning
+  type: subject
+- hierarchy:
+  - broadcasting!mass media
+  term: mass media broadcasting
+  type: subject
+- hierarchy:
+  - meaning!indexical
+  term: indexical meaning
+  type: subject
+- term: de-dialectization
+  type: subject
+- term: de-standardization
+  type: subject
+- hierarchy:
+  - acquisition!language
+  term: language acquisition
+  type: subject
+- hierarchy:
+  - linguistics!core
+  synonyms:
+  - core linguistic
+  term: core linguistics
+  type: subject
+- hierarchy:
+  - perception!dialect
+  term: dialect perception
+  type: subject
+- term: lexis
+  type: subject
+- term: phonology
+  type: subject
+- term: morphology
+  type: subject
+- term: syntax
+  type: subject
+- hierarchy:
+  - stimuli!natural
+  term: natural stimuli
+  type: subject
+- hierarchy:
+  - model!Matrix Language Frame
+  synonyms:
+  - matrix language frame model
+  term: Matrix Language Frame Model
+  type: subject
+- term: I-language
+  type: subject
+- see_also:
+  - diachrony
+  term: synchrony
+  type: subject
+- see_also:
+  - synchrony
+  term: diachrony
+  type: subject
+- term: variability
+  type: subject
+- hierarchy:
+  - language!fictional
+  term: fictional language
+  type: subject
+- term: Flemish
+  type: language
+- hierarchy:
+  - German!Low
+  term: Low German
+  type: language
+- term: Hessian
+  type: language
+- hierarchy:
+  - German!Upper
+  term: Upper German
+  type: language
+- hierarchy:
+  - Yiddish!Eastern
+  term: Eastern Yiddish
+  type: language
+- hierarchy:
+  - survey!internet
+  term: internet survey
+  type: subject
+- term: self-assessment
+  type: subject
+- term: alignment
+  type: subject
+- hierarchy:
+  - perception!language
+  term: language perception
+  type: subject
+- term: lay concepts
+  type: subject
+- term: orality
+  type: subject
+- hierarchy:
+  - doubling!pronoun
+  term: pronoun doubling
+  type: subject
+- synonyms:
+  - sentence bracket
+  term: Satzklammer
+  type: subject
+- term: 19th century
+  type: subject
+- synonyms:
+  - fiction
+  term: language!fictional
+  type: subject
+- synonyms:
+  - Western Yiddish
+  term: Yiddish!Western
+  type: language
+- synonyms:
+  - dialect continuum
+  term: continuum!dialect
+  type: subject
+- synonyms:
+  - cluster analysis
+  term: analysis!cluster
+  type: subject
+- term: word frequency
+  type: subject
+- term: clustering
+  type: subject
+- term: continuum
+  type: subject
+- term: category
+  type: subject
+- term: fuzzy set
+  type: subject
+- term: layer
+  type: subject
+- synonyms:
+  - bootstrap clustering
+  term: clustering!bootstrap
+  type: subject
+- synonyms:
+  - noisy clustering
+  term: clustering!noisy
+  type: subject
+- synonyms:
+  - factor analysis
+  term: analysis!factor
+  type: subject
+- term: dialect type
+  type: subject
+- synonyms:
+  - prototype theory
+  term: theory!prototype
+  type: subject
+- synonyms:
+  - schema theory
+  term: theory!schema
+  type: subject
+- see_also:
+  - etic
+  term: emic
+  type: subject
+- see_also:
+  - emic
+  term: etic
+  type: subject
+- term: typicality
+  type: subject
+- synonyms:
+  - cue validity
+  term: validity!cue
+  type: subject
+- synonyms:
+  - feature validity
+  term: validity!feature
+  type: subject
+- synonyms:
+  - transition area
+  term: area!transition
+  type: subject
+- synonyms:
+  - layer model
+  term: model!layer
+  type: subject
+- term: variety
+  type: subject
+- synonyms:
+  - bipartite spectral graph partitioning
+  term: partitioning!bipartite spectral graph
+  type: subject
+- synonyms:
+  - fuzzy clustering
+  term: clustering!fuzzy
+  type: subject
+- synonyms:
+  - multi-dimensional scaling
+  term: scaling!multi-dimensional
+  type: subject
+- term: condensation
+  type: subject
+- synonyms:
+  - spatial pattern
+  term: pattern!spatial
+  type: subject
+- synonyms:
+  - morphological variable
+  term: variable!morphological
+  type: subject
+- synonyms:
+  - phonetic variable
+  term: variable!phonetic
+  type: subject
+- term: lexicon
+  type: subject
+- term: phonetics
+  type: subject
+- synonyms:
+  - lexical variable
+  term: variable!lexical
+  type: subject
+- synonyms:
+  - dialect classification
+  term: classification!dialect
+  type: subject
+- term: s-retraction
+  type: subject
+- see_also:
+  - phonetics
+  term: sociophonetics
+  type: subject
+- term: ultrasound tongue imaging
+  type: subject
+- term: fricatives
+  type: subject
+- synonyms:
+  - articulatory phonetics
+  term: phonetics!articulatory
+  type: subject
+- term: dialect loss
+  type: subject
+- see_also:
+  - diaglossia
+  term: diglossia
+  type: subject
+- see_also:
+  - diglossia
+  term: diaglossia
+  type: subject
+- display: \textit{tussentaal}
+  term: tussentaal
+  type: subject
+- term: destandardisation
+  type: subject
+- term: demotisation
+  type: subject
+- term: style-shifting
+  type: subject
+- synonyms:
+  - correspondence analysis
+  term: analysis!correspondence
+  type: subject
+- term: VRT-Dutch
+  type: subject
+- term: micro-syntax
+  type: subject
+- term: emphatic negation
+  type: subject
+- term: minimiser
+  type: subject
+- synonyms:
+  - Jespersen’s Cycle
+  term: Jespersen's Cycle
+  type: subject
+- term: participant observation
+  type: subject
+- term: dialect awareness
+  type: subject
+- term: metacorpus
+  type: subject
+- term: emphatic particles
+  type: subject
+- term: shibboleths
+  type: subject
+- term: quantitative methods
+  type: subject
+- term: foreign accent
+  type: subject
+- hierarchy:
+  - accent
+  - perception
+  term: accent perception
+  type: subject
+- hierarchy:
+  - accent
+  - feature
+  term: characteristic accent feature
+  type: subject
+- hierarchy:
+  - classification
+  - accent
+  term: accent classification
+  type: subject
+- hierarchy:
+  - transcription
+  - accent
+  term: accent transcription
+  type: subject
+- term: Speech Accent Archive
+  type: subject
+- term: segment
+  type: subject
+- hierarchy:
+  - Levenshtein distance
+  - aggregated
+  term: aggregated Levenshtein distance
+  type: subject
+- term: French
+  type: language
+- hierarchy:
+  - fricative
+  - dental
+  term: dental fricative
+  type: subject
+- hierarchy:
+  - hierarchy
+  - pronunciation error
+  term: pronunciation error hierarchy
+  type: subject
+- term: vowel reduction
+  type: subject
+- hierarchy:
+  - English
+  - American
+  term: American English
+  type: language
+- hierarchy:
+  - teaching
+  - pronunciation
+  term: pronunciation teaching
+  type: subject
+- hierarchy:
+  - assimilation
+  - regressive
+  term: regressive assimilation
+  type: subject
+- hierarchy:
+  - neutralization
+  - fortis/lenis
+  term: fortis/lenis neutralization
+  type: subject
+- synonyms:
+  - speech errors
+  term: speech error
+  type: subject
+- hierarchy:
+  - elicitation
+  - data
+  term: data elicitation
+  type: subject
+- hierarchy:
+  - stimuli
+  - audiovisual
+  term: audiovisual stimuli
+  type: subject
+- hierarchy:
+  - hierarchy
+  - syntactic
+  term: syntactic hierarchy
+  type: subject
+- hierarchy:
+  - methodology
+  - quantitative
+  term: quantitative methodology
+  type: subject
+- term: educational level differences
+  type: subject
+- display: $\chi^2$ test
+  synonyms:
+  - chi-squared
+  term: chi-squared test
+  type: subject
+- hierarchy:
+  - model
+  - gravity
+  term: gravity model
+  type: subject
+- hierarchy:
+  - methodology
+  - qualitative
+  term: qualitative methodology
+  type: subject
+- hierarchy:
+  - address
+  - forms of
+  term: forms of address
+  type: subject
+- hierarchy:
+  - disagreement
+  - person
+  term: person disagreement
+  type: subject
+- term: standardisation
+  type: subject
+rules:
+  auto_hierarchy: true
+  auto_hierarchy_min_group: 2
+  auto_hierarchy_min_words: 1
+  synonym_mode: see

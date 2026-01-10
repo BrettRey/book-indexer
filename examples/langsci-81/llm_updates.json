@@ -1,0 +1,75 @@
+{
+  "updates": [
+    {
+      "id": 100,
+      "synonyms": ["SVD"]
+    },
+    {
+      "id": 101,
+      "hierarchy": ["k-means"],
+      "synonyms": []
+    },
+    {
+      "id": 104,
+      "hierarchy": ["lexical"],
+      "synonyms": []
+    },
+    {
+      "id": 105,
+      "canonical": "isogloss",
+      "hierarchy": ["bundle"],
+      "synonyms": []
+    },
+    {
+      "id": 107,
+      "hierarchy": ["dialectal"],
+      "synonyms": []
+    },
+    {
+      "id": 108,
+      "canonical": "isogloss",
+      "hierarchy": ["nested"],
+      "synonyms": []
+    },
+    {
+      "id": 109,
+      "hierarchy": ["British"],
+      "synonyms": []
+    },
+    {
+      "id": 110,
+      "hierarchy": ["corpus-based"],
+      "synonyms": []
+    },
+    {
+      "id": 113,
+      "hierarchy": ["hierarchical"],
+      "synonyms": []
+    },
+    {
+      "id": 116,
+      "hierarchy": ["generalized additive"],
+      "synonyms": ["GAM"]
+    },
+    {
+      "id": 117,
+      "hierarchy": ["regression"],
+      "synonyms": []
+    },
+    {
+      "id": 118,
+      "hierarchy": ["age"],
+      "synonyms": []
+    },
+    {
+      "id": 119,
+      "hierarchy": ["gender"],
+      "synonyms": []
+    }
+  ],
+  "notes": [
+    "Normalized 'isoglosses' to singular 'isogloss'.",
+    "Applied hierarchy to 'clustering', 'area', 'model' per preferences.",
+    "Structured 'differences', 'English', 'dialectometry' with sub-entries based on synonyms."
+  ]
+}

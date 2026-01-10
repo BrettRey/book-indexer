@@ -42,3 +42,7 @@ Apply suggestions directly to the lexicon:
 ```
 python -m book_indexer.cli assist chapters/ --lexicon lexicon.yaml --report llm_report.json --apply
 ```
+
+## Examples
+
+- `examples/langsci-81/` contains a lexicon snapshot and LLM update sample for reference.

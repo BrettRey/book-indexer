@@ -35,3 +35,4 @@
 - **2026-01-09 (Claude)**: Rewrote lexicon.py, tagger.py, cli.py with robust regex; tested on langsci-81
 - **2026-01-09 (Codex)**: Added LLM assist pipeline, canonical tagging fixes, hierarchy + cross-ref support
 - **2026-01-10 (Codex)**: Integrated Gemini CLI wrapper; LLM assist run on langsci-81 and applied updates
+- **2026-01-10 (Codex)**: Added LangSci 81 example snapshot under `examples/langsci-81/`
