@@ -266,6 +266,12 @@ class Tagger:
         text = re.sub(r'\s+', ' ', text).strip()
         return text
 
+    def _strip_sort_key(self, text: str) -> str:
+        """Drop sort keys (foo@bar -> bar) for display-only output."""
+        if '@' in text:
+            return text.split('@', 1)[1]
+        return text
+
     def _format_index_levels(self, levels: list[str]) -> str:
         formatted = []
         for level in levels:
@@ -294,7 +300,12 @@ class Tagger:
                     levels = [entry.get('display', entry.get('term', target))]
             else:
                 levels = [target]
-        return self._format_index_levels(levels)
+        display_levels = [self._strip_sort_key(level) for level in levels if level]
+        if not display_levels:
+            return ''
+        if len(display_levels) == 1:
+            return display_levels[0]
+        return ', '.join(display_levels)
 
     def _has_following_index_tag(self, content: str, end: int) -> bool:
         return FOLLOWING_INDEX_TAG_PATTERN.match(content, end) is not None

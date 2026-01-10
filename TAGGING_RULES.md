@@ -59,10 +59,23 @@ FDM\sindex{FDM|see{finite difference method}}
 finite difference method\sindex{finite difference method}\sindex{finite difference method|seealso{finite element method}}
 ```
 
+### Cross-Ref Targets with Hierarchy
+- If the canonical target is hierarchical (e.g., `English!British`), the tagger
+  will render the target as a readable display string (e.g., `English, British`)
+  in `see`/`seealso` output.
+
 Lexicon rule:
 ```yaml
 rules:
   synonym_mode: see
+```
+
+## LLM Judgment (Optional)
+
+Use the LLM to drop tags that are merely mentioned in passing:
+```
+python -m book_indexer.cli judge chapters/ --report llm_judgment.json
+python -m book_indexer.cli apply-judgment llm_judgment.json
 ```
 
 ## Suggestions (when existing tags differ)

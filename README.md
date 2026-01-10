@@ -44,11 +44,29 @@ python -m book_indexer.cli tag chapters/ \
   --strip
 ```
 
-3) Rebuild the LaTeX book (e.g., `latexmk`) to refresh the index and PDF.
+3) (Optional) Ask an LLM to drop tags that are only mentioned in passing:
+```
+python -m book_indexer.cli judge chapters/ --report llm_judgment.json
+python -m book_indexer.cli apply-judgment llm_judgment.json
+```
+
+4) Rebuild the LaTeX book (e.g., `latexmk`) to refresh the index and PDF.
 
 If you already have a saved LLM report, you can apply it without rerunning the LLM:
 ```
 python -m book_indexer.cli apply-report llm_report.json --lexicon lexicon.yaml
+```
+
+## LLM Tag Judgment (Optional)
+
+Use an LLM to prune tags that are only mentioned in passing:
+```
+python -m book_indexer.cli judge chapters/ --report llm_judgment.json
+```
+
+Apply removals from a saved judgment report:
+```
+python -m book_indexer.cli apply-judgment llm_judgment.json
 ```
 
 ## LLM Assist (Optional)
@@ -74,6 +92,16 @@ If Gemini returns invalid JSON, check `gemini_llm_error.txt` in your current wor
 Apply suggestions directly to the lexicon:
 ```
 python -m book_indexer.cli assist chapters/ --lexicon lexicon.yaml --report llm_report.json --apply
+```
+
+## Indexes-Only Preview (Optional)
+
+Generate a lightweight PDF of the indexes without building the full book:
+```
+python scripts/build_indexes_only.py chapters/ --output-dir .
+makeindex -o main.lnd main.ldx
+makeindex -o main.snd main.sdx
+xelatex -interaction=nonstopmode -halt-on-error indexes_only.tex
 ```
 
 ## Examples

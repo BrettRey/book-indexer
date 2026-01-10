@@ -8,6 +8,7 @@ import yaml
 from book_indexer.tagger import Tagger
 from book_indexer.lexicon import Lexicon
 from book_indexer.llm_assist import run_assist, apply_report, LLMError
+from book_indexer.llm_judge import run_judge, apply_judgment
 
 
 def cmd_scan(args):
@@ -113,6 +114,9 @@ Examples:
 
   # LLM-assisted lexicon suggestions
   book-indexer assist chapters/ --lexicon lexicon.yaml --report llm_report.json
+
+  # LLM-assisted judgement of existing tags
+  book-indexer judge chapters/ --report llm_judgment.json
 """
     )
     parser.add_argument('-v', '--verbose', action='store_true',
@@ -193,6 +197,43 @@ Examples:
     assist_parser.add_argument('--progress', action='store_true',
         help='Print progress updates during LLM assist')
 
+    # judge command
+    judge_parser = subparsers.add_parser('judge',
+        help='LLM-assisted relevance check for existing index tags')
+    judge_parser.add_argument('dir_path',
+        help='Path to directory containing LaTeX files')
+    judge_parser.add_argument('--report', '-r', default='llm_judgment.json',
+        help='Output JSON report (default: llm_judgment.json)')
+    judge_parser.add_argument('--provider',
+        choices=['openai', 'anthropic', 'command'], default='openai',
+        help='LLM provider to use (default: openai)')
+    judge_parser.add_argument('--model',
+        help='Model name for the LLM provider (optional)')
+    judge_parser.add_argument('--api-key',
+        help='Override API key (otherwise use provider env var)')
+    judge_parser.add_argument('--base-url',
+        help='Override provider API base URL')
+    judge_parser.add_argument('--llm-command',
+        help='Shell command to run when provider=command')
+    judge_parser.add_argument('--include-hidden', action='store_true',
+        help='Include hidden directories when scanning for .tex files')
+    judge_parser.add_argument('--chunk-size', type=int, default=25,
+        help='Number of tags per LLM call (default: 25)')
+    judge_parser.add_argument('--context-window', type=int, default=160,
+        help='Characters to include around each tag (default: 160)')
+    judge_parser.add_argument('--temperature', type=float, default=0.2,
+        help='LLM temperature (default: 0.2)')
+    judge_parser.add_argument('--max-tokens', type=int, default=1200,
+        help='Max tokens per LLM response (default: 1200)')
+    judge_parser.add_argument('--progress', action='store_true',
+        help='Print progress updates during LLM judgement')
+
+    # apply-judgment command
+    apply_judge_parser = subparsers.add_parser('apply-judgment',
+        help='Apply an LLM judgement report by removing dropped tags')
+    apply_judge_parser.add_argument('report_path',
+        help='Path to LLM judgment JSON (e.g., llm_judgment.json)')
+
     # apply-report command
     apply_parser = subparsers.add_parser('apply-report',
         help='Apply an existing LLM report to a lexicon')
@@ -235,6 +276,27 @@ Examples:
         except LLMError as exc:
             print(f"LLM assist failed: {exc}", file=sys.stderr)
             sys.exit(1)
+    elif args.command == 'judge':
+        try:
+            run_judge(
+                dir_path=args.dir_path,
+                report_path=args.report,
+                provider=args.provider,
+                model=args.model,
+                api_key=args.api_key,
+                base_url=args.base_url,
+                command=args.llm_command,
+                include_hidden=args.include_hidden,
+                chunk_size=args.chunk_size,
+                context_window=args.context_window,
+                temperature=args.temperature,
+                max_tokens=args.max_tokens,
+                progress=args.progress or args.verbose,
+            )
+            print(f"LLM judgment report saved to {args.report}")
+        except LLMError as exc:
+            print(f"LLM judgment failed: {exc}", file=sys.stderr)
+            sys.exit(1)
     elif args.command == 'apply-report':
         try:
             applied_path = args.applied_report
@@ -246,6 +308,13 @@ Examples:
             print(f"Applied report saved to {applied_path}")
         except LLMError as exc:
             print(f"Apply report failed: {exc}", file=sys.stderr)
+            sys.exit(1)
+    elif args.command == 'apply-judgment':
+        try:
+            removed = apply_judgment(args.report_path)
+            print(f"Removed {removed} tags")
+        except LLMError as exc:
+            print(f"Apply judgment failed: {exc}", file=sys.stderr)
             sys.exit(1)
 
 

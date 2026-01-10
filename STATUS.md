@@ -1,6 +1,6 @@
 # Book Indexer
 
-**Status:** Core implementation complete; LLM assist available and tested
+**Status:** Core implementation complete; LLM assist + judgment available and tested
 **Type:** Tool (Python)
 **Primary use:** HPC book index
 **Secondary use:** Share with LangSci Press
@@ -15,6 +15,7 @@
 - [x] Design
 - [x] Implementation (core pipeline)
 - [x] LLM-assisted lexicon suggestions (optional)
+- [x] LLM-assisted tag judgment (optional)
 - [ ] Testing on HPC book
 - [ ] Documentation for LangSci
 
@@ -36,3 +37,4 @@
 - **2026-01-09 (Codex)**: Added LLM assist pipeline, canonical tagging fixes, hierarchy + cross-ref support
 - **2026-01-10 (Codex)**: Integrated Gemini CLI wrapper; LLM assist run on langsci-81 and applied updates
 - **2026-01-10 (Codex)**: Added LangSci 81 example snapshot under `examples/langsci-81/`
+- **2026-01-10 (Codex)**: Added LLM tag judgment workflow + indexes-only preview helper
