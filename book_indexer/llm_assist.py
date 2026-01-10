@@ -100,6 +100,7 @@ class LLMClient:
         api_key: Optional[str] = None,
         base_url: Optional[str] = None,
         command: Optional[str] = None,
+        response_keys: Optional[list[str]] = None,
         temperature: float = 0.2,
         max_tokens: int = 1200,
     ):
@@ -108,6 +109,7 @@ class LLMClient:
         self.api_key = api_key
         self.base_url = base_url
         self.command = command
+        self.response_keys = response_keys or ["updates", "notes"]
         self.temperature = temperature
         self.max_tokens = max_tokens
 
@@ -121,6 +123,7 @@ class LLMClient:
                 'model': self.model,
                 'temperature': self.temperature,
                 'max_tokens': self.max_tokens,
+                'response_keys': self.response_keys,
             })
             result = subprocess.run(
                 self.command,
@@ -370,6 +373,7 @@ def run_assist(
         api_key=api_key,
         base_url=base_url,
         command=command,
+        response_keys=["updates", "notes"],
         temperature=temperature,
         max_tokens=max_tokens,
     )

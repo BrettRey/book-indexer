@@ -13,6 +13,10 @@ def main() -> int:
     system = payload.get("system", "")
     user = payload.get("user", "")
     model = payload.get("model", "")
+    response_keys = payload.get("response_keys")
+    if not isinstance(response_keys, list) or not response_keys:
+        response_keys = ["updates", "notes"]
+    primary_key = response_keys[0]
 
     prompt = (
         "System:\n"
@@ -23,8 +27,8 @@ def main() -> int:
         "- Return only valid JSON (no markdown, no prose).\n"
         "- Do not create, write, or mention files.\n"
         "- Do not call tools.\n"
-        "- Always wrap the response in a top-level object with keys \"updates\" and \"notes\".\n"
-        "- If unsure, return {\"updates\":[],\"notes\":[\"no_changes\"]}.\n"
+        f"- Always wrap the response in a top-level object with keys {json.dumps(response_keys)}.\n"
+        f"- If unsure, return {{\"{primary_key}\":[],\"notes\":[\"no_changes\"]}}.\n"
     )
 
     cmd = ["gemini", "--yolo", "--output-format", "json"]
@@ -107,8 +111,8 @@ def main() -> int:
         except json.JSONDecodeError:
             pass
 
-        # If we have notes but no updates key, wrap updates array.
-        if '"notes"' in text and '"updates"' not in text:
+        # If we have notes but no primary key, wrap list into the primary key.
+        if '"notes"' in text and f'"{primary_key}"' not in text:
             notes_idx = text.find('"notes"')
             prefix = text[:notes_idx].strip().rstrip(',')
             notes_part = text[notes_idx:]
@@ -131,10 +135,10 @@ def main() -> int:
                 return None, text
             notes_array = notes_part[notes_start:notes_end]
 
-            updates_raw = prefix
-            if not updates_raw.startswith('['):
-                updates_raw = f"[{updates_raw}]"
-            candidate = f'{{"updates": {updates_raw}, "notes": {notes_array}}}'
+            primary_raw = prefix
+            if not primary_raw.startswith('['):
+                primary_raw = f"[{primary_raw}]"
+            candidate = f'{{"{primary_key}": {primary_raw}, "notes": {notes_array}}}'
             try:
                 return json.loads(candidate), candidate
             except json.JSONDecodeError:
@@ -142,13 +146,13 @@ def main() -> int:
 
         # If looks like list of objects, wrap as updates list.
         if text.lstrip().startswith('{') and text.rstrip().endswith('}'):
-            candidate = f'{{"updates": [{text.strip()}], "notes": []}}'
+            candidate = f'{{"{primary_key}": [{text.strip()}], "notes": []}}'
             try:
                 return json.loads(candidate), candidate
             except json.JSONDecodeError:
                 return None, text
         if text.lstrip().startswith('[') and text.rstrip().endswith(']'):
-            candidate = f'{{"updates": {text.strip()}, "notes": []}}'
+            candidate = f'{{"{primary_key}": {text.strip()}, "notes": []}}'
             try:
                 return json.loads(candidate), candidate
             except json.JSONDecodeError:
@@ -169,8 +173,8 @@ def main() -> int:
         else:
             return write_error("Gemini CLI response was not JSON.")
 
-    if not isinstance(response_obj, dict) or 'updates' not in response_obj:
-        return write_error("Gemini CLI JSON missing required 'updates' field.")
+    if not isinstance(response_obj, dict) or primary_key not in response_obj:
+        return write_error(f"Gemini CLI JSON missing required '{primary_key}' field.")
 
     sys.stdout.write(normalized_text + "\n")
     return 0

@@ -69,6 +69,14 @@ Apply removals from a saved judgment report:
 python -m book_indexer.cli apply-judgment llm_judgment.json
 ```
 
+Use the Gemini CLI as a provider:
+```
+python -m book_indexer.cli judge .gemini/tmp/langsci-81/chapters \
+  --report llm_judgment.json \
+  --provider command \
+  --llm-command "scripts/gemini_llm.py"
+```
+
 ## LLM Assist (Optional)
 
 Generate lexicon normalization suggestions with an LLM:

@@ -117,6 +117,7 @@ def run_judge(
         api_key=api_key,
         base_url=base_url,
         command=command,
+        response_keys=["decisions", "notes"],
         temperature=temperature,
         max_tokens=max_tokens,
     )
@@ -148,6 +149,8 @@ def run_judge(
 
 
 def apply_judgment(report_path: str) -> int:
+    if not os.path.exists(report_path):
+        raise LLMError(f"Judgment report not found: {report_path}")
     with open(report_path, "r", encoding="utf-8") as handle:
         report = json.load(handle)
 
