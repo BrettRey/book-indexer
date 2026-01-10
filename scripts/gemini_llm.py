@@ -200,6 +200,45 @@ def main() -> int:
 
         return None, text
 
+    def salvage_partial_objects(text: str):
+        objects = []
+        in_str = False
+        escape = False
+        depth = 0
+        start_idx = None
+        for idx, ch in enumerate(text):
+            if in_str:
+                if escape:
+                    escape = False
+                elif ch == '\\':
+                    escape = True
+                elif ch == '"':
+                    in_str = False
+                continue
+            if ch == '"':
+                in_str = True
+                continue
+            if ch == '{':
+                if depth == 0:
+                    start_idx = idx
+                depth += 1
+                continue
+            if ch == '}':
+                if depth > 0:
+                    depth -= 1
+                    if depth == 0 and start_idx is not None:
+                        fragment = text[start_idx:idx + 1]
+                        fragment = strip_trailing_commas(fragment)
+                        try:
+                            obj = json.loads(fragment)
+                            if isinstance(obj, dict):
+                                objects.append(obj)
+                        except json.JSONDecodeError:
+                            pass
+                        start_idx = None
+                continue
+        return objects
+
     response_obj, normalized_text = coerce_json(response_text)
     if response_obj is None:
         # Try to salvage with first { ... }
@@ -208,10 +247,14 @@ def main() -> int:
         if start != -1 and end != -1 and end > start:
             candidate = response_text[start:end + 1]
             response_obj, normalized_text = coerce_json(candidate)
-            if response_obj is None:
+        if response_obj is None:
+            # Last resort: extract any complete objects and wrap them.
+            salvaged = salvage_partial_objects(response_text)
+            if salvaged:
+                normalized_text = json.dumps({primary_key: salvaged, "notes": []})
+                response_obj = {primary_key: salvaged, "notes": []}
+            else:
                 return write_error("Gemini CLI response contained invalid JSON.")
-        else:
-            return write_error("Gemini CLI response was not JSON.")
 
     if not isinstance(response_obj, dict) or primary_key not in response_obj:
         return write_error(f"Gemini CLI JSON missing required '{primary_key}' field.")
