@@ -8,24 +8,25 @@ Tool for creating indexes for LaTeX academic books.
 ## Status
 
 Core tagging + lexicon pipeline implemented with optional LLM assist.
+CLI is currently run via `python -m book_indexer.cli` (no packaged entry point yet).
 
 ## Quick Start
 
 Scan existing tags:
 ```
-book-indexer scan chapters/ --output lexicon.yaml
+python -m book_indexer.cli scan chapters/ --output lexicon.yaml
 ```
 
 Tag with canonical lexicon entries:
 ```
-book-indexer tag chapters/ --lexicon lexicon.yaml --mode auto --strip
+python -m book_indexer.cli tag chapters/ --lexicon lexicon.yaml --mode auto --strip
 ```
 
 ## LLM Assist (Optional)
 
 Generate lexicon normalization suggestions with an LLM:
 ```
-book-indexer assist chapters/ --lexicon lexicon.yaml --report llm_report.json
+python -m book_indexer.cli assist chapters/ --lexicon lexicon.yaml --report llm_report.json
 ```
 
 Use the Gemini CLI as a provider:
@@ -39,5 +40,5 @@ python -m book_indexer.cli assist .gemini/tmp/langsci-81/chapters \
 
 Apply suggestions directly to the lexicon:
 ```
-book-indexer assist chapters/ --lexicon lexicon.yaml --report llm_report.json --apply
+python -m book_indexer.cli assist chapters/ --lexicon lexicon.yaml --report llm_report.json --apply
 ```

@@ -59,6 +59,12 @@ FDM\sindex{FDM|see{finite difference method}}
 finite difference method\sindex{finite difference method}\sindex{finite difference method|seealso{finite element method}}
 ```
 
+Lexicon rule:
+```yaml
+rules:
+  synonym_mode: see
+```
+
 ## Suggestions (when existing tags differ)
 Plain text:
 ```

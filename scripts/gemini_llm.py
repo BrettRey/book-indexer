@@ -3,6 +3,7 @@
 
 import json
 import os
+import re
 import subprocess
 import sys
 
@@ -81,6 +82,10 @@ def main() -> int:
     else:
         response_text = str(response_text).strip()
 
+    fence_match = re.search(r"```(?:json)?\s*(\{.*\})\s*```", response_text, re.DOTALL)
+    if fence_match:
+        response_text = fence_match.group(1).strip()
+
     try:
         response_obj = json.loads(response_text)
     except json.JSONDecodeError:
@@ -90,6 +95,8 @@ def main() -> int:
             if stderr:
                 sys.stderr.write(stderr + "\n")
             sys.stderr.write("Gemini CLI response was not JSON.\n")
+            with open("gemini_llm_error.txt", "w", encoding="utf-8") as f:
+                f.write(response_text + "\n")
             return 1
         response_candidate = response_text[start:end + 1]
         try:
@@ -99,12 +106,16 @@ def main() -> int:
             if stderr:
                 sys.stderr.write(stderr + "\n")
             sys.stderr.write("Gemini CLI response contained invalid JSON.\n")
+            with open("gemini_llm_error.txt", "w", encoding="utf-8") as f:
+                f.write(response_text + "\n")
             return 1
 
     if not isinstance(response_obj, dict) or 'updates' not in response_obj:
         if stderr:
             sys.stderr.write(stderr + "\n")
         sys.stderr.write("Gemini CLI JSON missing required 'updates' field.\n")
+        with open("gemini_llm_error.txt", "w", encoding="utf-8") as f:
+            f.write(response_text + "\n")
         return 1
 
     sys.stdout.write(response_text + "\n")

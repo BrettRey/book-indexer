@@ -9,7 +9,7 @@
 2. **Detect candidates** for terms, names, and lexical items.
 3. **Classify** candidates into index types (language/lexical, subject, name).
 4. **Normalize** entry forms using lexicon + heuristics.
-5. **LLM assist (optional)** for hierarchy, cross-refs, and display forms.
+5. **LLM assist (optional)** for hierarchy, cross-refs, and display forms (API or CLI providers).
 6. **Structure** entries into hierarchy (term!subterm).
 7. **Range reasoning** to choose ranges vs single pages.
 8. **Cross-refs** (`see`, `see also`) from synonym and related-term signals.
@@ -54,7 +54,7 @@
 ## Chosen Approach (v0)
 - **Lexicon format:** YAML with an optional `rules` block.
 - **Parsing:** Hybrid (AST for structure + regex/token scanning for tagging).
-- **Tagging:** Inline typed macros (`\\sindex`, `\\nindex`, `\\lindex`) plus a report of suggested improvements.
+- **Tagging:** After-phrase typed macros (`\\sindex`, `\\nindex`, `\\lindex`) with optional inline mode.
 
 ## Index Macros (Chosen)
 - Use `imakeidx` (or equivalent) to define three named indexes and wrap them in typed macros.

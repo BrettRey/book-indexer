@@ -8,7 +8,7 @@ The tool targets LaTeX academic books and produces three indexes: language/lexic
 - Optional lexicon file (YAML/JSON) with canonical entries, synonyms, cross-refs, and hierarchy hints.
 
 ## Outputs
-- Updated LaTeX sources with inline tags (e.g., `\\index{...}` or index-type macros).
+- Updated LaTeX sources with after-phrase tags (e.g., `\\index{...}` or index-type macros).
 - `.idx` files for each index type, compatible with `makeindex`/`xindy`.
 - Change report summarizing insertions, edits, and suggested improvements.
 - Optional LLM suggestion report for lexicon normalization and cross-refs.
@@ -32,7 +32,7 @@ The tool targets LaTeX academic books and produces three indexes: language/lexic
 
 ## Compatibility
 - `makeindex` and `xindy` compatible `.idx` output.
-- Default inline tagging uses standard LaTeX index commands; optional typed macros.
+- Default after-phrase tagging uses typed macros; optional inline mode.
 
 ## Non-Functional Requirements
 - Deterministic runs where possible; log all changes.
