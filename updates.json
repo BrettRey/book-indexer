@@ -1,0 +1,35 @@
+{
+  "updates": [
+    {
+      "id": 85,
+      "synonyms": []
+    },
+    {
+      "id": 90,
+      "see_also": [
+        "short-a"
+      ]
+    },
+    {
+      "id": 94,
+      "canonical": "partitioning!spectral graph",
+      "synonyms": [
+        "HBSGP",
+        "hierarchical bipartite spectral graph partitioning"
+      ]
+    },
+    {
+      "id": 95,
+      "canonical": "clustering!regional"
+    },
+    {
+      "id": 97,
+      "canonical": "change!lexical"
+    }
+  ],
+  "notes": [
+    "Applied hierarchy to 'partitioning', 'clustering', and 'lexical change' per strict head!sub requirements.",
+    "Added cross-reference between 'tensing' and 'short-a'.",
+    "Removed redundant capitalization synonym for 'short-a'."
+  ]
+}
