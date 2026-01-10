@@ -78,6 +78,11 @@ python -m book_indexer.cli judge chapters/ --report llm_judgment.json
 python -m book_indexer.cli apply-judgment llm_judgment.json
 ```
 
+Resume a partial judgment run:
+```
+python -m book_indexer.cli judge chapters/ --report llm_judgment.json --resume
+```
+
 ## Suggestions (when existing tags differ)
 Plain text:
 ```

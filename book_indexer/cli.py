@@ -227,6 +227,10 @@ Examples:
         help='Max tokens per LLM response (default: 1200)')
     judge_parser.add_argument('--progress', action='store_true',
         help='Print progress updates during LLM judgement')
+    judge_parser.add_argument('--resume', action='store_true',
+        help='Resume from an existing report by skipping decided tags')
+    judge_parser.add_argument('--checkpoint', action='store_true',
+        help='Write the judgment report after each batch')
 
     # apply-judgment command
     apply_judge_parser = subparsers.add_parser('apply-judgment',
@@ -292,6 +296,8 @@ Examples:
                 temperature=args.temperature,
                 max_tokens=args.max_tokens,
                 progress=args.progress or args.verbose,
+                resume=args.resume,
+                checkpoint=args.checkpoint,
             )
             print(f"LLM judgment report saved to {args.report}")
         except LLMError as exc:

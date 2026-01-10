@@ -64,6 +64,13 @@ Use an LLM to prune tags that are only mentioned in passing:
 python -m book_indexer.cli judge chapters/ --report llm_judgment.json
 ```
 
+Resume a partial run (skips already-decided tags and checkpoints each batch):
+```
+python -m book_indexer.cli judge chapters/ \
+  --report llm_judgment.json \
+  --resume
+```
+
 Apply removals from a saved judgment report:
 ```
 python -m book_indexer.cli apply-judgment llm_judgment.json

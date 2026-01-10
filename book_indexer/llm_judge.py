@@ -92,6 +92,8 @@ def run_judge(
     temperature: float = 0.2,
     max_tokens: int = 1200,
     progress: bool = False,
+    resume: bool = False,
+    checkpoint: bool = False,
 ) -> None:
     files = _iter_tex_files(dir_path, include_hidden=include_hidden)
     if progress:
@@ -101,6 +103,40 @@ def run_judge(
         raise LLMError("No index tags found to judge")
     if progress:
         print(f"Collected {len(items)} tags for judgement.", flush=True)
+
+    existing_decisions: dict[int, dict] = {}
+    notes: list[str] = []
+    if resume and os.path.exists(report_path):
+        try:
+            with open(report_path, "r", encoding="utf-8") as handle:
+                existing_report = json.load(handle)
+            for decision in existing_report.get("decisions", []) or []:
+                if isinstance(decision, dict) and "id" in decision:
+                    existing_decisions[int(decision["id"])] = decision
+            existing_notes = existing_report.get("notes", [])
+            if isinstance(existing_notes, list):
+                notes.extend(existing_notes)
+            if progress and existing_decisions:
+                print(
+                    f"Resuming: {len(existing_decisions)} decisions already recorded.",
+                    flush=True,
+                )
+        except (json.JSONDecodeError, OSError) as exc:
+            raise LLMError(f"Failed to load existing report for resume: {exc}")
+
+    decisions: list[dict] = list(existing_decisions.values())
+    pending_items = [item for item in items if item["id"] not in existing_decisions]
+    if not pending_items:
+        report = {
+            "items": items,
+            "decisions": decisions,
+            "notes": notes,
+        }
+        with open(report_path, "w", encoding="utf-8") as handle:
+            json.dump(report, handle, indent=2)
+        if progress:
+            print(f"Report written to {report_path}.", flush=True)
+        return
 
     resolved_model = model
     if not resolved_model:
@@ -122,20 +158,36 @@ def run_judge(
         max_tokens=max_tokens,
     )
 
-    decisions: list[dict] = []
-    notes: list[str] = []
-
-    batches = _chunk(items, chunk_size)
+    batches = _chunk(pending_items, chunk_size)
     total_batches = len(batches)
     for idx, batch in enumerate(batches, start=1):
         if progress:
             print(f"LLM batch {idx}/{total_batches} ({len(batch)} tags)...", flush=True)
         system, user = _build_prompt(batch)
         result = client.complete_json(system, user)
-        decisions.extend(result.get("decisions", []))
+        new_decisions = result.get("decisions", [])
+        if isinstance(new_decisions, list):
+            for decision in new_decisions:
+                if not isinstance(decision, dict) or "id" not in decision:
+                    continue
+                decision_id = int(decision["id"])
+                if decision_id in existing_decisions:
+                    continue
+                existing_decisions[decision_id] = decision
+                decisions.append(decision)
         notes.extend(result.get("notes", []))
         if progress:
             print(f"LLM batch {idx}/{total_batches} complete.", flush=True)
+        if checkpoint or resume:
+            report = {
+                "items": items,
+                "decisions": decisions,
+                "notes": notes,
+            }
+            with open(report_path, "w", encoding="utf-8") as handle:
+                json.dump(report, handle, indent=2)
+            if progress:
+                print(f"Checkpoint saved to {report_path}.", flush=True)
 
     report = {
         "items": items,
