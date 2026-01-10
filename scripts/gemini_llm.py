@@ -58,27 +58,6 @@ def main() -> int:
         sys.stderr.write("Gemini CLI returned empty output.\n")
         return 1
 
-    # Validate/normalize JSON output for the assist pipeline.
-    try:
-        data = json.loads(stdout)
-    except json.JSONDecodeError:
-        start = stdout.find('{')
-        end = stdout.rfind('}')
-        if start == -1 or end == -1 or end <= start:
-            if stderr:
-                sys.stderr.write(stderr + "\n")
-            sys.stderr.write("Gemini CLI did not return JSON output.\n")
-            return 1
-        candidate = stdout[start:end + 1]
-        try:
-            data = json.loads(candidate)
-            stdout = candidate
-        except json.JSONDecodeError:
-            if stderr:
-                sys.stderr.write(stderr + "\n")
-            sys.stderr.write("Gemini CLI returned invalid JSON output.\n")
-            return 1
-
     response_text = None
     if isinstance(data, dict) and 'response' in data:
         response_text = data['response']
@@ -104,7 +83,65 @@ def main() -> int:
         sys.stderr.write("Wrote invalid output to gemini_llm_error.txt\n")
         return 1
 
+    def strip_trailing_commas(text: str) -> str:
+        out = []
+        in_str = False
+        escape = False
+        length = len(text)
+        i = 0
+        while i < length:
+            ch = text[i]
+            if in_str:
+                out.append(ch)
+                if escape:
+                    escape = False
+                elif ch == '\\':
+                    escape = True
+                elif ch == '"':
+                    in_str = False
+                i += 1
+                continue
+            if ch == '"':
+                in_str = True
+                out.append(ch)
+                i += 1
+                continue
+            if ch == ',':
+                j = i + 1
+                while j < length and text[j].isspace():
+                    j += 1
+                if j < length and text[j] in ']}':
+                    i += 1
+                    continue
+            out.append(ch)
+            i += 1
+        return ''.join(out)
+
+    # Validate/normalize JSON output for the assist pipeline.
+    cleaned_stdout = strip_trailing_commas(stdout)
+    try:
+        data = json.loads(cleaned_stdout)
+        stdout = cleaned_stdout
+    except json.JSONDecodeError:
+        start = cleaned_stdout.find('{')
+        end = cleaned_stdout.rfind('}')
+        if start == -1 or end == -1 or end <= start:
+            if stderr:
+                sys.stderr.write(stderr + "\n")
+            sys.stderr.write("Gemini CLI did not return JSON output.\n")
+            return 1
+        candidate = strip_trailing_commas(cleaned_stdout[start:end + 1])
+        try:
+            data = json.loads(candidate)
+            stdout = candidate
+        except json.JSONDecodeError:
+            if stderr:
+                sys.stderr.write(stderr + "\n")
+            sys.stderr.write("Gemini CLI returned invalid JSON output.\n")
+            return 1
+
     def coerce_json(text: str):
+        text = strip_trailing_commas(text)
         # Try direct parse
         try:
             return json.loads(text), text
@@ -139,6 +176,7 @@ def main() -> int:
             if not primary_raw.startswith('['):
                 primary_raw = f"[{primary_raw}]"
             candidate = f'{{"{primary_key}": {primary_raw}, "notes": {notes_array}}}'
+            candidate = strip_trailing_commas(candidate)
             try:
                 return json.loads(candidate), candidate
             except json.JSONDecodeError:
@@ -147,12 +185,14 @@ def main() -> int:
         # If looks like list of objects, wrap as updates list.
         if text.lstrip().startswith('{') and text.rstrip().endswith('}'):
             candidate = f'{{"{primary_key}": [{text.strip()}], "notes": []}}'
+            candidate = strip_trailing_commas(candidate)
             try:
                 return json.loads(candidate), candidate
             except json.JSONDecodeError:
                 return None, text
         if text.lstrip().startswith('[') and text.rstrip().endswith(']'):
             candidate = f'{{"{primary_key}": {text.strip()}, "notes": []}}'
+            candidate = strip_trailing_commas(candidate)
             try:
                 return json.loads(candidate), candidate
             except json.JSONDecodeError:
