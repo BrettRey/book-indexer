@@ -2,11 +2,12 @@
 
 import argparse
 import json
+import os
 import sys
 import yaml
 from book_indexer.tagger import Tagger
 from book_indexer.lexicon import Lexicon
-from book_indexer.llm_assist import run_assist, LLMError
+from book_indexer.llm_assist import run_assist, apply_report, LLMError
 
 
 def cmd_scan(args):
@@ -189,6 +190,18 @@ Examples:
         help='LLM temperature (default: 0.2)')
     assist_parser.add_argument('--max-tokens', type=int, default=1200,
         help='Max tokens per LLM response (default: 1200)')
+    assist_parser.add_argument('--progress', action='store_true',
+        help='Print progress updates during LLM assist')
+
+    # apply-report command
+    apply_parser = subparsers.add_parser('apply-report',
+        help='Apply an existing LLM report to a lexicon')
+    apply_parser.add_argument('report_path',
+        help='Path to LLM report JSON (e.g., llm_report.json)')
+    apply_parser.add_argument('--lexicon', '-l', default='lexicon.yaml',
+        help='Path to lexicon file (default: lexicon.yaml)')
+    apply_parser.add_argument('--applied-report',
+        help='Write applied diff JSON (default: <report>.applied.json)')
 
     args = parser.parse_args()
 
@@ -216,10 +229,23 @@ Examples:
                 context_window=args.context_window,
                 temperature=args.temperature,
                 max_tokens=args.max_tokens,
+                progress=args.progress or args.verbose,
             )
             print(f"LLM report saved to {args.report}")
         except LLMError as exc:
             print(f"LLM assist failed: {exc}", file=sys.stderr)
+            sys.exit(1)
+    elif args.command == 'apply-report':
+        try:
+            applied_path = args.applied_report
+            if not applied_path:
+                root, ext = os.path.splitext(args.report_path)
+                applied_path = f"{root}.applied.json" if ext else f"{args.report_path}.applied.json"
+            count = apply_report(args.report_path, args.lexicon, applied_path)
+            print(f"Applied {count} updates to {args.lexicon}")
+            print(f"Applied report saved to {applied_path}")
+        except LLMError as exc:
+            print(f"Apply report failed: {exc}", file=sys.stderr)
             sys.exit(1)
 
 

@@ -299,6 +299,27 @@ def _apply_updates(lexicon: Lexicon, updates: list[dict]) -> list[dict]:
     return results
 
 
+def apply_report(report_path: str, lexicon_path: str,
+                 applied_path: Optional[str] = None) -> int:
+    """Apply a previously generated LLM report to a lexicon."""
+    with open(report_path, 'r', encoding='utf-8') as f:
+        report = json.load(f)
+
+    updates = report.get('updates', [])
+    if not isinstance(updates, list):
+        raise LLMError("Report is missing a valid 'updates' list")
+
+    lexicon = Lexicon(lexicon_path)
+    applied = _apply_updates(lexicon, updates)
+    lexicon.save(lexicon_path)
+
+    if applied_path:
+        with open(applied_path, 'w', encoding='utf-8') as f:
+            json.dump(applied, f, indent=2)
+
+    return len(applied)
+
+
 def run_assist(
     dir_path: str,
     lexicon_path: str,
@@ -315,12 +336,16 @@ def run_assist(
     context_window: int = 80,
     temperature: float = 0.2,
     max_tokens: int = 1200,
+    progress: bool = False,
 ) -> None:
     lexicon = Lexicon(lexicon_path)
     if len(lexicon) == 0:
         raise LLMError(f"No entries in lexicon {lexicon_path}")
 
     files = _iter_tex_files(dir_path, include_hidden=include_hidden)
+    if progress:
+        print(f"Loaded {len(lexicon.entries)} lexicon entries.", flush=True)
+        print(f"Scanning {len(files)} .tex files for context...", flush=True)
     entries = []
     for idx, entry in enumerate(lexicon.entries):
         entry_copy = json.loads(json.dumps(entry))
@@ -328,6 +353,8 @@ def run_assist(
         entries.append(entry_copy)
 
     contexts = _build_contexts(files, entries, max_contexts, context_window)
+    if progress:
+        print("Context extraction complete.", flush=True)
     resolved_model = model
     if not resolved_model:
         if provider == 'openai':
@@ -350,11 +377,18 @@ def run_assist(
     updates: list[dict] = []
     notes: list[str] = []
 
-    for batch in _chunk(entries, chunk_size):
+    batches = _chunk(entries, chunk_size)
+    total_batches = len(batches)
+
+    for idx, batch in enumerate(batches, start=1):
+        if progress:
+            print(f"LLM batch {idx}/{total_batches} ({len(batch)} entries)...", flush=True)
         system, user = _build_prompt(batch, contexts)
         result = client.complete_json(system, user)
         updates.extend(result.get('updates', []))
         notes.extend(result.get('notes', []))
+        if progress:
+            print(f"LLM batch {idx}/{total_batches} complete.", flush=True)
 
     report = {
         'updates': updates,
@@ -362,6 +396,8 @@ def run_assist(
     }
     with open(report_path, 'w', encoding='utf-8') as f:
         json.dump(report, f, indent=2)
+    if progress:
+        print(f"Report written to {report_path}.", flush=True)
 
     if apply:
         applied = _apply_updates(lexicon, updates)
@@ -369,3 +405,5 @@ def run_assist(
         applied_path = os.path.splitext(report_path)[0] + ".applied.json"
         with open(applied_path, 'w', encoding='utf-8') as f:
             json.dump(applied, f, indent=2)
+        if progress:
+            print(f"Applied updates written to {applied_path}.", flush=True)

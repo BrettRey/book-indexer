@@ -19,7 +19,12 @@ def main() -> int:
         f"{system}\n\n"
         "User:\n"
         f"{user}\n\n"
-        "Return only valid JSON. Do not add any extra text."
+        "IMPORTANT:\n"
+        "- Return only valid JSON (no markdown, no prose).\n"
+        "- Do not create, write, or mention files.\n"
+        "- Do not call tools.\n"
+        "- Always wrap the response in a top-level object with keys \"updates\" and \"notes\".\n"
+        "- If unsure, return {\"updates\":[],\"notes\":[\"no_changes\"]}.\n"
     )
 
     cmd = ["gemini", "--yolo", "--output-format", "json"]
@@ -86,39 +91,88 @@ def main() -> int:
     if fence_match:
         response_text = fence_match.group(1).strip()
 
-    try:
-        response_obj = json.loads(response_text)
-    except json.JSONDecodeError:
-        start = response_text.find('{')
-        end = response_text.rfind('}')
-        if start == -1 or end == -1 or end <= start:
-            if stderr:
-                sys.stderr.write(stderr + "\n")
-            sys.stderr.write("Gemini CLI response was not JSON.\n")
-            with open("gemini_llm_error.txt", "w", encoding="utf-8") as f:
-                f.write(response_text + "\n")
-            return 1
-        response_candidate = response_text[start:end + 1]
-        try:
-            response_obj = json.loads(response_candidate)
-            response_text = response_candidate
-        except json.JSONDecodeError:
-            if stderr:
-                sys.stderr.write(stderr + "\n")
-            sys.stderr.write("Gemini CLI response contained invalid JSON.\n")
-            with open("gemini_llm_error.txt", "w", encoding="utf-8") as f:
-                f.write(response_text + "\n")
-            return 1
-
-    if not isinstance(response_obj, dict) or 'updates' not in response_obj:
+    def write_error(message: str) -> int:
         if stderr:
             sys.stderr.write(stderr + "\n")
-        sys.stderr.write("Gemini CLI JSON missing required 'updates' field.\n")
+        sys.stderr.write(message + "\n")
         with open("gemini_llm_error.txt", "w", encoding="utf-8") as f:
             f.write(response_text + "\n")
+        sys.stderr.write("Wrote invalid output to gemini_llm_error.txt\n")
         return 1
 
-    sys.stdout.write(response_text + "\n")
+    def coerce_json(text: str):
+        # Try direct parse
+        try:
+            return json.loads(text), text
+        except json.JSONDecodeError:
+            pass
+
+        # If we have notes but no updates key, wrap updates array.
+        if '"notes"' in text and '"updates"' not in text:
+            notes_idx = text.find('"notes"')
+            prefix = text[:notes_idx].strip().rstrip(',')
+            notes_part = text[notes_idx:]
+
+            # Extract notes array
+            notes_start = notes_part.find('[')
+            if notes_start == -1:
+                return None, text
+            depth = 0
+            notes_end = -1
+            for i, ch in enumerate(notes_part[notes_start:], start=notes_start):
+                if ch == '[':
+                    depth += 1
+                elif ch == ']':
+                    depth -= 1
+                    if depth == 0:
+                        notes_end = i + 1
+                        break
+            if notes_end == -1:
+                return None, text
+            notes_array = notes_part[notes_start:notes_end]
+
+            updates_raw = prefix
+            if not updates_raw.startswith('['):
+                updates_raw = f"[{updates_raw}]"
+            candidate = f'{{"updates": {updates_raw}, "notes": {notes_array}}}'
+            try:
+                return json.loads(candidate), candidate
+            except json.JSONDecodeError:
+                return None, text
+
+        # If looks like list of objects, wrap as updates list.
+        if text.lstrip().startswith('{') and text.rstrip().endswith('}'):
+            candidate = f'{{"updates": [{text.strip()}], "notes": []}}'
+            try:
+                return json.loads(candidate), candidate
+            except json.JSONDecodeError:
+                return None, text
+        if text.lstrip().startswith('[') and text.rstrip().endswith(']'):
+            candidate = f'{{"updates": {text.strip()}, "notes": []}}'
+            try:
+                return json.loads(candidate), candidate
+            except json.JSONDecodeError:
+                return None, text
+
+        return None, text
+
+    response_obj, normalized_text = coerce_json(response_text)
+    if response_obj is None:
+        # Try to salvage with first { ... }
+        start = response_text.find('{')
+        end = response_text.rfind('}')
+        if start != -1 and end != -1 and end > start:
+            candidate = response_text[start:end + 1]
+            response_obj, normalized_text = coerce_json(candidate)
+            if response_obj is None:
+                return write_error("Gemini CLI response contained invalid JSON.")
+        else:
+            return write_error("Gemini CLI response was not JSON.")
+
+    if not isinstance(response_obj, dict) or 'updates' not in response_obj:
+        return write_error("Gemini CLI JSON missing required 'updates' field.")
+
+    sys.stdout.write(normalized_text + "\n")
     return 0
 
 
