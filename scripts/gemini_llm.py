@@ -58,22 +58,6 @@ def main() -> int:
         sys.stderr.write("Gemini CLI returned empty output.\n")
         return 1
 
-    response_text = None
-    if isinstance(data, dict) and 'response' in data:
-        response_text = data['response']
-    else:
-        response_text = stdout
-
-    if isinstance(response_text, dict):
-        response_obj = response_text
-        response_text = json.dumps(response_obj)
-    else:
-        response_text = str(response_text).strip()
-
-    fence_match = re.search(r"```(?:json)?\s*(\{.*\})\s*```", response_text, re.DOTALL)
-    if fence_match:
-        response_text = fence_match.group(1).strip()
-
     def write_error(message: str) -> int:
         if stderr:
             sys.stderr.write(stderr + "\n")
@@ -139,6 +123,22 @@ def main() -> int:
                 sys.stderr.write(stderr + "\n")
             sys.stderr.write("Gemini CLI returned invalid JSON output.\n")
             return 1
+
+    response_text = None
+    if isinstance(data, dict) and 'response' in data:
+        response_text = data['response']
+    else:
+        response_text = stdout
+
+    if isinstance(response_text, dict):
+        response_obj = response_text
+        response_text = json.dumps(response_obj)
+    else:
+        response_text = str(response_text).strip()
+
+    fence_match = re.search(r"```(?:json)?\s*(\{.*\})\s*```", response_text, re.DOTALL)
+    if fence_match:
+        response_text = fence_match.group(1).strip()
 
     def coerce_json(text: str):
         text = strip_trailing_commas(text)
