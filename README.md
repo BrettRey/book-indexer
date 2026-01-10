@@ -84,6 +84,15 @@ python -m book_indexer.cli judge .gemini/tmp/langsci-81/chapters \
   --llm-command "scripts/gemini_llm.py"
 ```
 
+## Troubleshooting
+
+- **`book-indexer` not found:** use `python -m book_indexer.cli ...` (no installed entry point yet).
+- **Gemini JSON errors:** check `gemini_llm_error.txt`; rerun with `--resume` (judgment) or re-run `assist`.
+- **Judgment stops mid-run:** rerun with `--resume` (and optionally `--checkpoint`).
+- **Too many failures:** reduce `--chunk-size` (e.g., 10–15) and rerun.
+- **`llm_judgment.json` missing:** run `judge` first; `apply-judgment` needs that report.
+- **`see/seealso` shows `!`:** legacy tags from before the cross-ref display fix; re-tag with current code (and re-run judgment afterward if you already applied it).
+
 ## LLM Assist (Optional)
 
 Generate lexicon normalization suggestions with an LLM:
